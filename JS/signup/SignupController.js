@@ -1,4 +1,5 @@
 import { pubSub } from "../pubSub.js";
+import { createApiUser,loginApiUser} from "./SignupProvider.js";
 
 export class SignupController {
     constructor(nodeElement) {
@@ -41,10 +42,27 @@ export class SignupController {
   
       const regExp = new RegExp(/^[a-zA-Z0-9]*$/)
   
-      if (regExp.test(passwordElement.value)) {
-        
+      if (regExp.test(passwordElement.value) && passwordElement.value.length > minLength) {
+        this.createUser()
       } else {
         pubSub.publish(pubSub.TOPICS.NOTIFICATION_ERROR, `La contraseña debe contener únicamente minúsculas, mayúsculas o números`)
       }
     }
+  
+    
+    async createUser() {
+      const formData = new FormData(this.signupElement);
+      const username = formData.get('username')
+      const password = formData.get('password')
+  
+      try {
+        await createApiUser(username, password)
+        const jwt = await loginApiUser(username, password)
+        localStorage.setItem('token', jwt)
+        window.location.replace('index.html');
+      } catch (error) {
+        console.log(error)
+        pubSub.publish(pubSub.TOPICS.NOTIFICATION_ERROR, `Error en la creación. Inténtalo mas tarde`)
+      }
+    } 
   }
