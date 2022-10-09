@@ -1,6 +1,6 @@
-import { AdminAdController } from "./AdminAdController.js";
+import { AccountPanelController } from "./accountPanelController.js";
 
-let adminAdController = null;
+let accountPanelController = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   const handleUserLogged = () => {
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutButton = userActionsElement.querySelector('#user-actions-logout-button');
 
 
-    adminAdController = new AdminAdController(userActionsElement);
+    accountPanelController = new AccountPanelController(userActionsElement);
   }
 
   handleUserLogged();
@@ -24,7 +24,7 @@ logoutButton.addEventListener('click', () => {
     if (token)
     {
         localStorage.removeItem('token'); 
-        adminAdController.setActions();
+        accountPanelController.setActions();
     }
            
 });

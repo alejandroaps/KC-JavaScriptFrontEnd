@@ -1,6 +1,6 @@
-import { loggedActions, nonLoggedActions } from "./AdminAdview.js";
+import { loggedActions, nonLoggedActions } from "./accountPanelview.js";
 
-export class AdminAdController {    
+export class AccountPanelController {    
    constructor(nodeElement){
         this.userActionsElement = nodeElement;
 
